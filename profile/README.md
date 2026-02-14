@@ -1,244 +1,263 @@
 # FHNW BSc BAI -- AI-assisted Software Development
 
-Welcome to the official GitHub organization of the module **AI-assisted Software Development** in the **BSc Business Artificial Intelligence (BAI)** program at FHNW.
+Welcome to the official GitHub organization of the module  
+**AI-assisted Software Development**  
+in the **BSc Business Artificial Intelligence (BAI)** program at FHNW.
 
-This organization hosts:
+------------------------------------------------------------------------
 
--   Reference implementations (e.g., BAIssue)
--   Capstone project repositories
--   Architecture examples
--   CI/CD templates
--   AI-assisted SDLC documentation
--   Tooling and workflow standards
+# AI-Assisted Lean Software Development Life Cycle (AI-SDLC)
 
----
+This module applies a structured, AI-compatible SDLC integrating:
 
-# AI-Assisted Software Development Life Cycle (AI-SDLC)
-
-This document describes the AI-Assisted SDLC used in this project.  
-It aligns with:
-
-- Clean Architecture principles
-- Test-Driven Development (TDD)
+- Test-Driven Development (TDD) and the Testing Pyramid
+- Clean Architecture
+- CI/CD and Containerization
 - Spec-Driven Development (SDD)
-- CI/CD practices
 - SAFe-compatible iterative delivery
-- AI-assisted engineering (completion, vibe coding, agentic coding)
+- Kanban-based execution
+- Agentic Coding workflows
 
----
+The model is disciplined, lightweight, and enterprise-oriented.
 
-## Overview
+------------------------------------------------------------------------
 
-The AI-Assisted SDLC is iterative and quality-driven.  
-Architecture and tests are defined **before** implementation.  
-AI tools assist throughout the process, but engineering responsibility remains with the team.
+# Visual Overview
 
----
+```mermaid
+flowchart TD
 
-## Process Model
+A[1 Define<br>Business Use Case] --> B[2 Specify<br>Executable Spec]
+B --> C[3 Design<br>Architecture & Test Strategy]
+C --> D[4 Develop<br>TDD Loop]
+D --> E[5 Validate<br>Full Testing Pyramid]
+E --> F[6 Deploy<br>Containerized Release]
+F --> G[7 Operate & Adapt<br>Monitoring & Feedback]
 
-(1) Business Use Case / Epic Definition  
-        ↓  
-(2) Requirement & Spec-Driven Development (SDD)  
-        ↓  
-(3) AI-Assisted Architecture Definition / Validation  
-        ↓  
-(4) AI-Assisted Test-Driven Development (TDD)  
-        ↓  
-(5) AI-Assisted Implementation & Local Unit Testing  
-        ↺ Iteration back to 2–4  
-        ↓  
-(6) Continuous Integration & Multi-Level Testing  
-        ↺ Iteration back to 2–5  
-        ↓  
-(7) Containerized Release Build & End-to-End Testing  
-        ↺ Iteration back to 2–5  
-        ↓  
-(8) Continuous Deployment  
-        ↓  
-(9) Operation, Monitoring & Feedback  
-        ↺ Feedback back to 1–2  
+D -. iteration .-> B
+E -. feedback .-> C
+G -. new requirements .-> A
+```
 
----
+------------------------------------------------------------------------
 
-## Phase Descriptions
+# Core Engineering Order
 
-### 1. Business Use Case / Epic Definition
+1. Define business value.
+2. Specify executable requirements.
+3. Design architecture and testing strategy.
+4. Write tests first (TDD).
+5. Implement minimal business logic.
+6. Validate via full pyramid.
+7. Deploy and monitor.
 
-- Define business value  
-- Create epics, features, or user stories  
-- Define acceptance criteria  
-- Track work via GitHub Issues or Boards  
+TDD precedes implementation.  
+Specification precedes architectural change.  
+Architecture precedes use-case coding.
 
-No implementation work happens here.
+------------------------------------------------------------------------
 
----
+# Test-Driven Development (TDD)
 
-### 2. Requirement & Spec-Driven Development (SDD)
+TDD is mandatory and drives implementation.
 
-Before writing code:
+## Red → Green → Refactor
 
-- Define API contracts (e.g., OpenAPI)  
-- Define domain concepts and entities  
-- Define acceptance criteria formally  
-- Document architectural intent (e.g., in AGENTS.md)  
+1. Write failing unit test.
+2. Implement minimal code.
+3. Refactor safely.
+4. Repeat.
 
-Specification precedes implementation.
+## Testing Pyramid
 
----
+- Unit ≈ 70%
+- Integration ≈ 20%
+- E2E ≈ 10%
 
-### 3. AI-Assisted Architecture Definition / Validation
+## CI Enforcement
 
-Define or validate:
+- Unit tests on commit
+- Integration tests on PR
+- Full pyramid before deployment
 
-- Domain layer (entities)  
-- Application layer (use cases/services)  
-- Interface layer (API boundaries)  
-- Infrastructure layer (database, frameworks)  
+------------------------------------------------------------------------
 
-Dependency direction must follow Clean Architecture rules.
+# Lean Spec-Driven Development (SDD)
 
-AI may suggest structures, but decisions remain architectural decisions.
+Lean SDD structures AI-assisted development using **three Markdown
+files**.
 
----
+## Core Artifacts
 
-### 4. AI-Assisted Test-Driven Development (TDD)
+-   `AGENTS.md` -- Workflow engine (phase control + rules)
+-   `SPECS.md` -- Living specification (goals + architecture intent)
+-   `TASKS.md` -- Execution tracking (TDD progress + coverage)
 
-Before implementing use cases:
+These files are version-controlled, tool-agnostic, and natively usable
+by agentic tools.
 
-- Write or generate unit tests  
-- Define integration scenarios  
-- Define E2E scenarios  
+------------------------------------------------------------------------
 
-Tests represent executable specifications.
+## Example -- BAIssue
 
----
+### AGENTS.md
 
-### 5. AI-Assisted Implementation & Local Unit Testing
+``` markdown
+# AGENTS.md - Lean SDD Workflow
 
-Only after requirements, architecture, and tests are defined:
+This file defines the development workflow and guardrails.
+Do not store project status here. Status lives in TASKS.md.
 
-- Implement use cases  
-- Keep business logic framework-independent  
-- Ensure unit tests pass locally  
+## Artifacts (must exist at repo root)
+- SPECS.md  : Living specification (what/why + architecture intent)
+- TASKS.md  : Task list + current phase + progress tracking
 
-If inconsistencies arise, iterate back to previous phases.
+## Expected structure
 
----
-
-### 6. Continuous Integration & Multi-Level Testing
-
-On every push:
-
-- Run unit tests  
-- Run integration tests  
-- Validate architecture constraints  
-
-CI enforces built-in quality.
-
----
-
-### 7. Containerized Release Build & End-to-End Testing
-
-Before release:
-
-- Build Docker image  
-- Run container  
-- Execute E2E tests against the running artifact  
-
-The deployable artifact is tested, not only the source code.
-
----
-
-### 8. Continuous Deployment
-
-- Tag-based releases  
-- Docker image publishing  
-- Cloud deployment  
-
-Deployment is automated but controlled.
-
----
-
-### 9. Operation, Monitoring & Feedback
-
-- Health checks  
-- Logging  
-- Observability  
-- User feedback  
-
-Feedback loops create new requirements.
-
----
-
-## AI Usage Guidelines
-
-AI tools may be used for:
-
-- Architecture proposals  
-- Test generation  
-- Code scaffolding  
-- Refactoring suggestions  
-- Documentation assistance  
-
-However:
-
-- Developers remain responsible for correctness.  
-- Generated code must be reviewed.  
-- Architecture decisions must be justified.
-
----
-
-## Quality Principles
-
-This AI-Assisted SDLC enforces:
-
-- Specification before implementation  
-- Tests before business logic  
-- Clean separation of concerns  
-- Automated quality gates  
-- Deployable artifacts validated before release  
-- Continuous learning and iteration  
-
----
-
-## Alignment with Clean Architecture
-
-The SDLC directly supports the architectural structure:
-
-- Domain: protected by unit tests  
-- Application: tested via integration tests  
-- Interfaces: validated via API and contract tests  
-- Infrastructure: validated through containerized E2E testing  
-
----
-
-## Summary
-
-This AI-Assisted SDLC ensures:
-
-- Structured agility  
-- Built-in quality  
-- Architecture-first thinking  
-- Responsible AI usage  
-- Continuous improvement  
-
-It is intentionally lightweight but disciplined.
-
----
-
-## Educational Objective
-
-The goal of this module is not only to build software but to understand how AI transforms the software engineering process.
-
-Students learn to:
-
--   Structure enterprise applications
--   Apply TDD and SDD rigorously
--   Integrate CI/CD pipelines
--   Use AI responsibly and effectively
--   Reflect on tooling decisions
-
----
+### SPECS.md sections (required)
+- Goals
+- Scope (in/out)
+- Non-Functional Requirements (NFRs) - minimal
+- Architecture (Clean Architecture mapping)
+- API Contract (OpenAPI link or endpoint list)
+- Data Model (entities overview)
+
+### TASKS.md sections (required)
+- CURRENT PHASE (single source of truth for phase)
+- Task list with per-task test breakdown:
+  - Unit
+  - Integration
+  - E2E
+- Definition of Done checklist (per task or global)
+- Coverage / quality targets (optional but recommended)
+
+## Phases
+1 SPECIFY  : Update SPECS.md (goals/scope/NFRs/contracts). Then set TASKS.md CURRENT PHASE = 2.
+2 DESIGN   : Validate architecture + slice tasks in TASKS.md. Then set CURRENT PHASE = 3.
+3 DEVELOP  : Implement strictly test-first per task (TDD). Keep Clean Architecture boundaries. Then set CURRENT PHASE = 4.
+                ↺ If spec or architecture mismatch → return to 1 or 2
+4 VALIDATE : Run full test suite locally and in CI. Fix failures. Then set CURRENT PHASE = 5.
+                ↺ If failing → return to 3
+5 DEPLOY   : Container build + E2E against container artifact, then release/deploy.
+                ↺ If deployment issues → return to 3 or 4
+
+## Rules (guardrails)
+- TDD FIRST: write tests before implementation (tests/unit/ → src/)
+- Testing Pyramid guideline: Unit ~70%, Integration ~20%, E2E ~10%
+- Clean Architecture layering: domain / application / interfaces / infrastructure
+- No merge without green CI
+- Prefer small vertical slices (one use case end-to-end) over horizontal layers
+
+## Agent Interaction Model
+
+Agents may:
+- Propose architectural changes (Phase 2)
+- Generate tests (Phase 3 - Red)
+- Generate implementation (Phase 3 - Green)
+- Suggest refactoring
+
+Agents must NOT:
+- Skip TDD
+- Merge without green CI
+```
+
+------------------------------------------------------------------------
+
+### SPECS.md
+
+``` markdown
+# SPECS.md - BAIssue Minimal Spec
+
+## Goals
+- Create issues and close issues via REST API.
+
+## Scope
+IN:
+- Create Issue, Close Issue
+OUT:
+- Auth, labels, comments
+
+## NFRs
+- Response time: typical requests < 100ms locally
+- API documented via OpenAPI (/docs)
+
+## Architecture (Clean Architecture)
+- Domain: Issue entity (status rules)
+- Application: IssueUseCases (create, close)
+- Interfaces: FastAPI routes (REST)
+- Infrastructure: SQLAlchemy repository + relational DB (SQLite dev/CI, PostgreSQL prod)
+
+## API Contract
+- POST /issues
+- PATCH /issues/{id}/close
+- GET /health
+
+## Data Model (minimal)
+- Issue: id, title, status (open|closed)
+```
+
+------------------------------------------------------------------------
+
+### TASKS.md
+
+``` markdown
+# TASKS.md - BAIssue Tasks
+
+CURRENT PHASE: 3  # 1=Specify | 2=Design | 3=Develop | 4=Validate | 5=Deploy
+
+## Definition of Done (global)
+- [ ] Unit tests green
+- [ ] Integration tests green
+- [ ] E2E tests green (if task has E2E)
+- [ ] CI green
+- [ ] Code follows Clean Architecture boundaries
+
+## Tasks
+
+### 1. Create Issue
+1.1 Unit: domain Issue creation rules [DONE]
+1.2 Unit: application IssueUseCases.create() [IN PROGRESS]
+1.3 Integration: POST /issues persists + returns 201 [TODO]
+1.4 E2E: POST /issues works against container [TODO]
+
+### 2. Close Issue
+2.1 Unit: domain Issue.close() transitions open→closed [TODO]
+2.2 Unit: application IssueUseCases.close() [TODO]
+2.3 Integration: PATCH /issues/{id}/close [TODO]
+2.4 E2E: close flow against container [TODO]
+```
+
+------------------------------------------------------------------------
+
+# SAFe & Kanban Alignment
+
+| SAFe Concept        | AI-SDLC Phase |
+|---------------------|--------------|
+| Epic                | Define |
+| PI Planning         | Specify |
+| System Architecture | Design |
+| Sprint Execution    | Develop |
+| System Demo         | Validate |
+| Inspect & Adapt     | Operate & Adapt |
+
+Kanban boards track:
+
+- Backlog (Spec)
+- In Progress (TDD)
+- Review (CI)
+- Done (Deployed)
+
+------------------------------------------------------------------------
+
+# Clean Architecture Mapping
+
+| Layer           | Validation Level |
+|----------------|-----------------|
+| Domain         | Unit tests |
+| Application    | Unit tests |
+| Interfaces     | Integration tests |
+| Infrastructure | Containerized E2E tests |
+
+------------------------------------------------------------------------
 
 © FHNW -- BSc Business Artificial Intelligence
