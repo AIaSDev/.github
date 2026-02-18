@@ -1,32 +1,35 @@
 # FHNW BSc BAI -- AI-assisted Software Development
 
-Welcome to the official GitHub organization of the module  
-**AI-assisted Software Development**  
-in the **BSc Business Artificial Intelligence (BAI)** program at FHNW.
+Welcome to the official GitHub organization of the module **AI-assisted Software Development** in the **BSc Business Artificial Intelligence (BAI)** program at FHNW.
+
+This organization provides reference implementations (e.g., BAIssue), capstone repositories, Clean Architecture examples, CI/CD templates, and workflow standards.
 
 ---
 
-# AI-Assisted Lean Software Development Life Cycle (AI-SDLC)
+# AI-Assisted Lean SDLC (AI-SDLC)
 
-This module applies a structured, AI-compatible SDLC integrating:
+A lightweight, disciplined SDLC for **agentic coding** (e.g., Cline, Claude Code, Codex, GitHub Copilot, Cursor, Windsurf) that integrates:
 
-- Test-Driven Development (TDD) and the Testing Pyramid
-- Clean Architecture
-- CI/CD and Containerization
-- Lean Spec-Driven Development (SDD) via AGENTS.md
-- SAFe-compatible iterative delivery
-- Kanban-based execution
-- Agentic Coding workflows
+- **Test-Driven Development (TDD)** + **Testing Pyramid**
+- **Clean Architecture**
+- **CI/CD** + **containerized releases**
+- **Lean Spec-Driven Development (SDD)** via `AGENTS.md` + `docs/`
+- **SAFe-compatible** iterative delivery
+- **Kanban-based execution** (GitHub Projects)
 
-The model is lightweight, disciplined, and enterprise-oriented.
+Primary workflow artifacts (repo-local):
+- `AGENTS.md` (router + guardrails)
+- `docs/TASKS.md` (single source of truth: phase + current UC)
+- `docs/PROJECT.md` (architecture + run/test commands)
+- `docs/specs/UC-XXX.md` (executable use case specs)
+- `docs/ai-sdlc/PHASE-*.md` (phase instructions)
 
 ---
 
-# Visual Overview
+## Visual Overview
 
 ```mermaid
 flowchart TD
-
 A["1 SPECIFY<br/>Use Case Definition"] --> B["2 DESIGN<br/>Architecture & Task Slicing"]
 B --> C["3 DEVELOP<br/>Integration -> Unit -> Code (TDD)"]
 C --> D["4 VALIDATE<br/>E2E + CI + Release Build"]
@@ -42,92 +45,86 @@ B -. refinement .-> A
 C -. spec mismatch .-> A
 D -. architecture adjustment .-> B
 ```
+
 ---
 
-# Phase Summary
+## Phase Summary
 
-## 1. SPECIFY
-Define a concrete use case from user stories.  
-Create a structured specification (`docs/specs/UC-XXX.md`) including scope, acceptance criteria, and minimal NFRs.
-
+### 1. SPECIFY
+Turn a user story into a **single executable use case spec** (`docs/specs/UC-XXX.md`): scope (IN/OUT), acceptance criteria, minimal NFRs, and test intent mapping (unit/integration/e2e).  
 No coding.
 
-## 2. DESIGN
-Validate Clean Architecture and select frameworks.  
-Slice vertical tasks in `docs/TASKS.md`.  
+### 2. DESIGN
+Stabilize architecture and boundaries using **Clean Architecture** (defined in `docs/PROJECT.md`). Confirm frameworks/libraries, define ports/adapters, and slice **vertical tasks** in `docs/TASKS.md` (integration → unit → implementation).
 
-Architecture rule:
+### 3. DEVELOP
+Strict test-first development per task:
+1) integration tests (boundary behaviour)  
+2) unit tests (domain + use case)  
+3) code (Red → Green → Refactor)  
+4) review after each step; run unit tests locally
 
-domain ← application ← interfaces ← infrastructure
+### 4. VALIDATE
+Make the UC release-ready:
+- e2e tests
+- Dockerfile (deployable artifact)
+- GitHub Actions: CI (unit+integration) and Release (build image + run e2e on container + publish package)
+- quality gates (recommended coverage ≥ 80%)
 
-## 3. DEVELOP
-Strict TDD execution per use case:
-
-1. Write integration tests  
-2. Write unit tests  
-3. Implement code (Red → Green → Refactor)  
-4. Review after each step  
-
-Unit tests must pass locally before proceeding.
-
-## 4. VALIDATE
-- Develop E2E tests  
-- Generate Dockerfile  
-- Create CI workflow (unit + integration)  
-- Create Release workflow (build image + run E2E on container)  
-- Ensure CI green  
-
-Testing Pyramid guideline:
-
-- Unit ≈ 70%
-- Integration ≈ 20%
-- E2E ≈ 10%
-
-## 5. DEPLOY
-Create CD workflow (e.g., GitHub Actions → Render).  
-Deploy only validated container artifacts.
+### 5. DEPLOY
+Add CD workflow (e.g., Render) to deploy **validated container artifacts**, including a post-deploy smoke check and documented secret names.
 
 ---
 
-# Lean Spec-Driven Development (SDD)
+## Lean SDD (Spec-Driven Development)
 
-SDD is controlled via:
+Lean SDD is **controlled by `AGENTS.md`** and the `docs/` files:
+- `docs/specs/UC-XXX.md` defines *what* to build (executable intent)
+- `docs/TASKS.md` defines *what is next* (phase + task progress)
+- `docs/PROJECT.md` defines *how the repo is structured and run*
 
-- AGENTS.md – workflow router and guardrails  
-- docs/TASKS.md – phase + execution tracking  
-- docs/specs/UC-XXX.md – executable use case specification  
-
-Example implementation: https://github.com/AIaSDev/BAIssue/
+Minimal example (BAIssue):
+```text
+https://github.com/AIaSDev/BAIssue/
+```
 
 ---
 
-# SAFe & Kanban Alignment
+## TDD and the Testing Pyramid
 
-| SAFe Concept        | AI-SDLC Phase |
-|---------------------|--------------|
-| Epic / Feature      | Specify |
+Guideline:
+- Unit ≈ 70% (domain + application)
+- Integration ≈ 20% (interfaces ↔ infrastructure)
+- E2E ≈ 10% (full flows against built artifact)
+
+CI expectation:
+- unit+integration on PRs
+- e2e in release pipeline (container-based)
+
+---
+
+## SAFe and Kanban Alignment
+
+| SAFe concept | AI-SDLC phase |
+|---|---|
+| Epic / Feature (backlog) | Specify |
 | System Architecture | Design |
-| Sprint Execution    | Develop |
-| System Demo         | Validate |
-| Inspect & Adapt     | Deploy → Feedback |
+| Iteration execution | Develop |
+| System demo / validation | Validate |
+| Release + operate feedback | Deploy → feedback to Specify |
 
-Kanban tracks:
-
-- Backlog (UC specs)
-- In Progress (TDD)
-- Review (CI)
-- Done (Deployed)
+Kanban (GitHub Projects) typically tracks: Spec/Backlog → In progress → Review/CI → Done/Deployed.
 
 ---
 
-# Clean Architecture Mapping
+## Clean Architecture Mapping
 
-| Layer           | Validation |
-|----------------|-----------|
-| Domain         | Unit tests |
-| Application    | Unit tests |
-| Interfaces     | Integration tests |
-| Infrastructure | Containerized E2E tests |
+| Layer | Primary validation |
+|---|---|
+| Domain | Unit tests |
+| Application | Unit tests |
+| Interfaces | Integration tests |
+| Infrastructure | Integration + containerized E2E |
 
 ---
 
