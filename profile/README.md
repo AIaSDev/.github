@@ -13,16 +13,17 @@ A lightweight, disciplined SDLC for **agentic coding** (e.g., Cline, Claude Code
 - **Test-Driven Development (TDD)** + **Testing Pyramid**
 - **Clean Architecture**
 - **CI/CD** + **containerized releases**
-- **Lean Spec-Driven Development (SDD)** via `AGENTS.md` + `docs/`
+- **Lean Spec-Driven Development (SDD)** orchestrated by `AGENTS.md` and `skills/ai-sdlc-[phase]`
 - **SAFe-compatible** iterative delivery
 - **Kanban-based execution** (GitHub Projects)
 
 Primary workflow artifacts (repo-local):
-- `AGENTS.md` (router + guardrails)
-- `docs/TASKS.md` (single source of truth: phase + current UC)
-- `docs/PROJECT.md` (architecture + run/test commands)
-- `docs/specs/UC-XXX.md` (executable use case specs)
-- `docs/ai-sdlc/PHASE-*.md` (phase instructions)
+
+- `AGENTS.md` — workflow router and guardrails
+- `docs/TASKS.md` — lifecycle state (current phase + UC)
+- `docs/PROJECT.md` — architecture and runtime instructions
+- `docs/specs/UC-XXX.md` — executable use case specifications
+- `skills/ai-sdlc-[phase]` — phase execution skills
 
 ---
 
@@ -30,7 +31,8 @@ Primary workflow artifacts (repo-local):
 
 ```mermaid
 flowchart TD
-A["1 SPECIFY<br/>Use Case Definition"] --> B["2 DESIGN<br/>Architecture & Task Slicing"]
+X["0 BOOTSTRAP<br/>Project Initialization"] --> A["1 SPECIFY<br/>Use Case Definition"]
+A --> B["2 DESIGN<br/>Architecture & Task Slicing"]
 B --> C["3 DEVELOP<br/>Integration -> Unit -> Code (TDD)"]
 C --> D["4 VALIDATE<br/>E2E + CI + Release Build"]
 D --> E["5 DEPLOY<br/>CD to Cloud"]
@@ -50,9 +52,16 @@ D -. architecture adjustment .-> B
 
 ## Phase Summary
 
+### 0. BOOTSTRAP
+Initialize project structure and architecture baseline:
+
+- Clean Architecture folder structure
+- dependency management
+- first use case specification
+- initial `PROJECT.md` setup
+
 ### 1. SPECIFY
-Turn a user story into a **single executable use case spec** (`docs/specs/UC-XXX.md`): scope (IN/OUT), acceptance criteria, minimal NFRs, and test intent mapping (unit/integration/e2e).  
-No coding.
+Turn a user story into a **single executable use case spec** (`docs/specs/UC-XXX.md`): scope (IN/OUT), acceptance criteria, minimal NFRs, and test intent mapping (unit/integration/e2e). No coding.
 
 ### 2. DESIGN
 Stabilize architecture and boundaries using **Clean Architecture** (defined in `docs/PROJECT.md`). Confirm frameworks/libraries, define ports/adapters, and slice **vertical tasks** in `docs/TASKS.md` (integration → unit → implementation).
@@ -78,10 +87,11 @@ Add CD workflow (e.g., Render) to deploy **validated container artifacts**, incl
 
 ## Lean SDD (Spec-Driven Development)
 
-Lean SDD is **controlled by `AGENTS.md`** and the `docs/` files:
-- `docs/specs/UC-XXX.md` defines *what* to build (executable intent)
-- `docs/TASKS.md` defines *what is next* (phase + task progress)
-- `docs/PROJECT.md` defines *how the repo is structured and run*
+Lean SDD is controlled by `AGENTS.md` and the AI-SDLC skills.
+
+- `AGENTS.md` routes lifecycle execution
+- `docs/TASKS.md` defines the current phase and active UC
+- `skills/ai-sdlc-[phase]` execute the lifecycle steps
 
 Minimal example (BAIssue):
 ```text
