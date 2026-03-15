@@ -38,14 +38,9 @@ C --> D["4 VALIDATE<br/>E2E + CI + Release Build"]
 D --> E["5 DEPLOY<br/>CD to Cloud"]
 
 %% Iteration loops
-C -. iteration .-> B
 D -. failing tests .-> C
+D -. iteration .-> A
 E -. feedback .-> A
-
-%% Additional backward paths
-B -. refinement .-> A
-C -. spec mismatch .-> A
-D -. architecture adjustment .-> B
 ```
 
 ---
