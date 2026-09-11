@@ -4,7 +4,7 @@ Welcome to the GitHub organisation for the **AI-assisted Software Development** 
 
 ## Start here
 
-- [AI-SDLC documentation](https://docs.aisl.science/ai-sdlc) — canonical human-readable method documentation
+- [AI-SDLC documentation](https://docs.aisl.science/learning-and-resources/ai-sdlc) — canonical human-readable method documentation
 - [AI-SDLC project template](https://github.com/AIaSDev/ai-sdlc-template) — executable repository starter for student projects
 - [BAIssue](https://github.com/AIaSDev/BAIssue) — reference implementation
 
